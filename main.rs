@@ -11,24 +11,24 @@ fn create_array() -> [i32; SIZE] {
 }
 
 //Bubble Sort
-pub fn bubble_sort(mut xs: [i32; SIZE]) {
-    let n = xs.len();
+pub fn bubble_sort(mut myarray: [i32; SIZE]) {
+    let n = myarray.len();
     for _ in 1.. n {
         for j in 0.. n-1 {
-            if xs[j+1] < xs[j] {
-                xs.swap(j+1, j);
+            if myarray[j+1] < myarray[j] {
+                myarray.swap(j+1, j);
             }
         }
     }
 }
 
 //Insertion Sort
-pub fn insertion_sort(mut xs: [i32; SIZE]) {
-    let (mut i, len) = (1, xs.len());
+pub fn insertion_sort(mut myarray: [i32; SIZE]) {
+    let (mut i, len) = (1, myarray.len());
     while i < len {
         let mut j = i;
-        while j > 0 && xs[j-1] > xs[j] {
-            xs.swap(j, j-1);
+        while j > 0 && myarray[j-1] > myarray[j] {
+            myarray.swap(j, j-1);
             j = j - 1;
         }
         i = i + 1;
@@ -36,75 +36,75 @@ pub fn insertion_sort(mut xs: [i32; SIZE]) {
 }
 
 //Selection Sort
-pub fn selection_sort(mut xs: [i32; SIZE]) {
-    let (mut i, len) = (0, xs.len());
+pub fn selection_sort(mut myarray: [i32; SIZE]) {
+    let (mut i, len) = (0, myarray.len());
     while i < len {
         let (mut j, mut cur_min) = (i + 1, i);
         while j < len {
-            if xs[j] < xs[cur_min] {
+            if myarray[j] < myarray[cur_min] {
                 cur_min = j;
             }
             j = j + 1;
         }
-        xs.swap(i, cur_min);
+        myarray.swap(i, cur_min);
         i = i + 1;
     }
 }
 
 //Shell Sort
-pub fn shell_sort(mut xs: [i32; SIZE]) {
-    let len = xs.len();
+pub fn shell_sort(mut myarray: [i32; SIZE]) {
+    let len = myarray.len();
     let mut gap = len as i32 / 2;
 
     while gap > 0 {
         for i in gap..len as i32 {
-            let temp = xs[i as usize];
+            let temp = myarray[i as usize];
             let mut j = i;
 
-            while j >= gap && xs[j as usize - gap as usize] > temp {
-                xs.swap(j as usize, j as usize - gap as usize);
+            while j >= gap && myarray[j as usize - gap as usize] > temp {
+                myarray.swap(j as usize, j as usize - gap as usize);
                 j -= gap;
             }
 
-            xs[j as usize] = temp;
+            myarray[j as usize] = temp;
         }
         gap /= 2;
     }
 }
 
 //Heap Sort
-pub fn heap_sort(xs: &mut [i32]) {
-    if xs.len() <= 1 {
+pub fn heap_sort(myarray: &mut [i32]) {
+    if myarray.len() <= 1 {
         return;
     }
 
-    let last_parent = (xs.len() - 2) / 2;
+    let last_parent = (myarray.len() - 2) / 2;
     for i in (0..=last_parent).rev() {
-        move_down(xs, i);
+        move_down(myarray, i);
     }
 
-    for end in (1..xs.len()).rev() {
-        xs.swap(0, end);
-        move_down(&mut xs[..end], 0);
+    for end in (1..myarray.len()).rev() {
+        myarray.swap(0, end);
+        move_down(&mut myarray[..end], 0);
     }
 }
 
-fn move_down(xs: &mut [i32], mut root: usize) {
-    let last = xs.len() - 1;
+fn move_down(myarray: &mut [i32], mut root: usize) {
+    let last = myarray.len() - 1;
     loop {
         let left = 2 * root + 1;
         if left > last {
             break;
         }
         let right = left + 1;
-        let child = if right <= last && xs[right] > xs[left] {
+        let child = if right <= last && myarray[right] > myarray[left] {
             right
         } else {
             left
         };
 
-        if xs[child] > xs[root] {
-            xs.swap(root, child);
+        if myarray[child] > myarray[root] {
+            myarray.swap(root, child);
         }
         root = child;
     }
